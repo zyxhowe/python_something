@@ -1,9 +1,11 @@
 #将一个正整数分解质因数。
 import math
 def prime(x):
-    y=int(math.sqrt(x))
-    if y==1:
+    if x<4:
         return x
+    y=int(math.sqrt(x))
+    if y<4:
+        y=x
     if x!=y*y:
         for i in range(2,y):
             if x%i==0:
@@ -13,22 +15,17 @@ def prime(x):
     return 0
 
 def anal(y):
-    for k in range(2,y):
-        if y%k==0:
-            return k
-
+    new=[1]
+    if y==1:
+        return new
+    while prime(y)==0:
+        for j in range(2,y):
+            if y%j==0:
+                new.append(j)
+                y=int(y/j)
+                break
+    new.append(y)
+    return new
 n=int(input())
-m=int(math.sqrt(n))
-a=[]
-for i in range(2,m):
-    s1=prime(n)
-    if s1==0:
-        s2=anal(n)
-        n=int(n/s2)
-        a.append(s2)
-    else:
-       a.append(s1)
-       break
-
-print(a)
+print(anal(n))
     
